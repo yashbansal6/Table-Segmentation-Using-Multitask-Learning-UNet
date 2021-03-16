@@ -1,0 +1,7 @@
+1. preprocess.py
+2. preprocess_rowcol.py
+3. resize.py
+4. split.py 
+// no use of rowcolseg.py (old file)
+// requirements.txt (not official)
+5. rename folders made by split.py acc to https://divamgupta.com/image-segmentation/2019/06/06/deep-learning-semantic-segmentation-keras.html

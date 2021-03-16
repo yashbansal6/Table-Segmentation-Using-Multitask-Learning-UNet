@@ -1,3 +1,7 @@
+'''
+Pre-Processing for GAN Images - Red & Blue
+Result stored in Dataset/unlv_rgb_gt/
+'''
 import cv2
 import json
 import numpy as np

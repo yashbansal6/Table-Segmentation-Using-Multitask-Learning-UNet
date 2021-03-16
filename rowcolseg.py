@@ -1,8 +1,3 @@
-'''
-Pre-Processing for SegNet
-Crop Tables from UNLV
-Segment into rows & cols
-'''
 import cv2
 import json
 import numpy as np
@@ -18,22 +13,22 @@ DS = r"G:/My Drive/College/Sem-6/BTP/Dataset/UNLV/UNLV_dataset/"
 GAN = r"G:/My Drive/College/Sem-6/BTP/Table-Localisation-and-Segmentation-Using-GAN-CNN/"
 GAN_IMG = r"G:/My Drive/College/Sem-6/BTP/Table-Localisation-and-Segmentation-Using-GAN-CNN/Dataset/unlv_aug_img/"
 GAN_GT = r"G:/My Drive/College/Sem-6/BTP/Table-Localisation-and-Segmentation-Using-GAN-CNN/Dataset/unlv_rgb_gt/"
-GAN_ROWSEG_GT = r"G:/My Drive/College/Sem-6/BTP/ds_row/rows/"
-GAN_COLSEG_GT = r"G:/My Drive/College/Sem-6/BTP/ds_col/cols/"
+GAN_SEG_GT = r"G:/My Drive/College/Sem-6/BTP/Table-Localisation-and-Segmentation-Using-GAN-CNN/Dataset/unlv_seg_gt/"
 #GAN_TRY = r"G:/My Drive/College/Sem-6/BTP/Table-Localisation-and-Segmentation-Using-GAN-CNN/Dataset/unlv_try/"
+
 
 for file in os.listdir(DS + "unlv_xml_gt"):
     ("filename : " + file)
-    # if c==1:
-    #     break
+    #if c==1:
+    #    break
 
     if file.endswith(".xml"):
         
         print(file + "   " + str(c))
         c += 1
     
-        row_seg = file.replace(".xml",".png")
-        col_seg = file.replace(".xml",".png")
+        row_seg = file.replace(".xml","_r.png")
+        col_seg = file.replace(".xml","_c.png")
 
         tree = ET.parse(DS + "unlv_xml_gt/" + file) 
         # getting the parent tag of the xml document 
@@ -61,9 +56,9 @@ for file in os.listdir(DS + "unlv_xml_gt"):
                 t_top = int(table_dict['y0'])
                 t_down = int(table_dict['y1'])
                 
-                local_r[t_top:t_down,t_left:t_right] = 255
+                local_r[t_top:t_down,t_left:t_right] = 1
                 
-                local_c[t_top:t_down,t_left:t_right] = 255
+                local_c[t_top:t_down,t_left:t_right] = 1
 
                 for subsubelem in subelem.findall('Column'):
                     col_dict = subsubelem.attrib
@@ -82,27 +77,20 @@ for file in os.listdir(DS + "unlv_xml_gt"):
                     r_down = int(row_dict['y1'])
                     
                     local_r = cv2.line(local_r, (r_left,r_top), (r_right,r_down), (0,0,0), 8) 
-
-            # crop the tables from doc
-            local_r = local_r[t_top:t_down,t_left:t_right]
-            local_c = local_c[t_top:t_down,t_left:t_right]
-
+            
             local_c = cv2.resize(local_c, (512, 512))
             local_r = cv2.resize(local_r, (512, 512))
 
             #cv2.imwrite(GAN_SEG_GT + row_seg, cv2.cvtColor(local_r, cv2.COLOR_RGB2BGR))
             #cv2.imwrite(GAN_SEG_GT + col_seg, cv2.cvtColor(local_c, cv2.COLOR_RGB2BGR))
 
-            ret, local_r = cv2.threshold(local_r, 128, 1, cv2.THRESH_BINARY)
-            ret, local_c = cv2.threshold(local_c, 128, 1, cv2.THRESH_BINARY)
+            ret, local_r = cv2.threshold(local_r, 1, 1, cv2.THRESH_BINARY)
+            ret, local_c = cv2.threshold(local_c, 1, 1, cv2.THRESH_BINARY)
 
-            cv2.imwrite(GAN_ROWSEG_GT + row_seg, local_r)
-            cv2.imwrite(GAN_COLSEG_GT + col_seg, local_c)
+            cv2.imwrite(GAN_SEG_GT + row_seg, local_r)
+            cv2.imwrite(GAN_SEG_GT + col_seg, local_c)
             
-            # img = Image.fromarray(local_c, 'RGB')
-            # img.show()
-            #cv2.imshow("IMG",local_c)
-            #cv2.waitKey(0)
+            #print(local_c)
             #plt.imshow(local_r)
             #plt.show()
             #plt.imshow(local_c)
