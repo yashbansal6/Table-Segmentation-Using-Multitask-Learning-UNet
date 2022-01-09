@@ -3,6 +3,7 @@ Pre-Processing for SegNet
 Crop Tables from UNLV
 Segment into rows & cols
 '''
+
 import cv2
 import json
 import numpy as np
@@ -23,25 +24,21 @@ GAN_COLSEG_GT = r"G:/My Drive/College/Sem-6/BTP/ds_col/cols/"
 #GAN_TRY = r"G:/My Drive/College/Sem-6/BTP/Table-Localisation-and-Segmentation-Using-GAN-CNN/Dataset/unlv_try/"
 
 for file in os.listdir(DS + "unlv_xml_gt"):
-    ("filename : " + file)
-    # if c==1:
-    #     break
 
     if file.endswith(".xml"):
         
         print(file + "   " + str(c))
-        c += 1
     
         row_seg = file.replace(".xml",".png")
         col_seg = file.replace(".xml",".png")
 
         tree = ET.parse(DS + "unlv_xml_gt/" + file) 
+        
         # getting the parent tag of the xml document 
-
         root = tree.getroot() 
-        #print(root)
-
+        
         # printing the root (parent) tag of the xml document, along with  its memory location 
+        #print(root)
 
         doc_name = file.replace(".xml",".png")
         document = cv2.imread(DS + "unlv_images/" + doc_name)
@@ -86,24 +83,16 @@ for file in os.listdir(DS + "unlv_xml_gt"):
             # crop the tables from doc
             local_r = local_r[t_top:t_down,t_left:t_right]
             local_c = local_c[t_top:t_down,t_left:t_right]
-
+            
+            # resize to 512x512
             local_c = cv2.resize(local_c, (512, 512))
             local_r = cv2.resize(local_r, (512, 512))
-
-            #cv2.imwrite(GAN_SEG_GT + row_seg, cv2.cvtColor(local_r, cv2.COLOR_RGB2BGR))
-            #cv2.imwrite(GAN_SEG_GT + col_seg, cv2.cvtColor(local_c, cv2.COLOR_RGB2BGR))
-
+            
+            # Thresholding values below and above 128 to be 0 and 1 respectively
+            # To create Mask
             ret, local_r = cv2.threshold(local_r, 128, 1, cv2.THRESH_BINARY)
             ret, local_c = cv2.threshold(local_c, 128, 1, cv2.THRESH_BINARY)
-
+            
+            # Save Mask
             cv2.imwrite(GAN_ROWSEG_GT + row_seg, local_r)
             cv2.imwrite(GAN_COLSEG_GT + col_seg, local_c)
-            
-            # img = Image.fromarray(local_c, 'RGB')
-            # img.show()
-            #cv2.imshow("IMG",local_c)
-            #cv2.waitKey(0)
-            #plt.imshow(local_r)
-            #plt.show()
-            #plt.imshow(local_c)
-            #plt.show()  
