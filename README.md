@@ -21,4 +21,4 @@ We use colab notebooks to Preprocess the dataset and Train our model.
 
 ## Steps to Use
 1) Use 'Data Preprocessing/UNLV_Preprocessing.ipynb' to download and preprocess the dataset.
-2) Use 'Training/U_Net_MTL_w_Scipy_Distance_Transform.ipynb' or 'U_Net_Multi_Task_Learning.ipynb' to train the model, using the data downloaded from the above step.
+2) Use 'Training/U_Net_MTL_w_Scipy_Distance_Transform.ipynb' or 'U_Net_MTL.ipynb' to train the model, using the data downloaded from the above step.
