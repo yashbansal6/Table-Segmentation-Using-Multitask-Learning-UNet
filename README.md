@@ -14,3 +14,17 @@ Sample Image and Masks :
 ## Deep-Learning Model Architecture
 
 ![image](https://user-images.githubusercontent.com/65908705/139569899-a9e2f421-3f79-4261-9b20-e46258f1758d.png)
+
+<i>Sample Prediction</i>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/65908705/139570009-e44cceec-66b5-4b44-9f10-78c60e4f8681.png" />
+</p>
+
+## Requirements
+Given the ease of use of colab notebooks, as it almost needs no external requirement files, no dependencies, or 
+We use colab notebooks to Preprocess the dataset and Train our model.
+
+## Steps to Use
+1) Use 'Data Preprocessing/UNLV_Preprocessing.ipynb' to download and preprocess the dataset.
+2) Use 'Training/U_Net_MTL_w_Scipy_Distance_Transform.ipynb' or 'U_Net_Multi_Task_Learning.ipynb' to train the model, using the data downloaded from the above step.
