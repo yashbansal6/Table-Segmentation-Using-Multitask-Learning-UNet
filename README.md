@@ -15,14 +15,8 @@ Sample Image and Masks :
 
 ![image](https://user-images.githubusercontent.com/65908705/139569899-a9e2f421-3f79-4261-9b20-e46258f1758d.png)
 
-<i>Sample Prediction</i>
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/65908705/139570009-e44cceec-66b5-4b44-9f10-78c60e4f8681.png" />
-</p>
-
 ## Requirements
-Given the ease of use of colab notebooks, as it almost needs no external requirement files, no dependencies, or 
+Given the ease of use of colab notebooks, as it almost needs no external requirement files, no dependencies, or system requirements 
 We use colab notebooks to Preprocess the dataset and Train our model.
 
 ## Steps to Use
